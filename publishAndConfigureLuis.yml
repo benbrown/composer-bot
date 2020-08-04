@@ -1,0 +1,56 @@
+parameters:
+- name: projectPath
+  type: string
+  default: ''
+- name: resourceGroupServiceConnection
+  type: string
+  default: ''
+- name: keyVaultName
+  type: string
+  default: ''
+- name: luisAuthoringKeySecretName
+  type: string
+  default: ''
+- name: luisEndpointKeySecretName
+  type: string
+  default: ''
+
+steps:
+- task: AzureKeyVault@1
+  displayName: Get Secrets
+  inputs:
+    azureSubscription: '${{parameters.resourceGroupServiceConnection}}'
+    KeyVaultName: '${{parameters.keyVaultName}}'
+    SecretsFilter: '*'
+    RunAsPreJob: false
+- task: Bash@3
+  displayName: Publish Luis and Set App Configuration
+  inputs:
+    targetType: 'inline'
+    script: |
+      # set key in app settings
+      jq '.luis.endpointKey = "$(${{parameters.luisEndpointKeySecretName}})"' ${{parameters.projectPath}}/settings/appsettings.json > ${{parameters.projectPath}}/settings/appsettings.json.tmp
+      rm ${{parameters.projectPath}}/settings/appsettings.json
+      mv ${{parameters.projectPath}}/settings/appsettings.json.tmp ${{parameters.projectPath}}/settings/appsettings.json
+
+      # get bf-cli
+      npm i -g @microsoft/botframework-cli
+
+      # delete empty lu and lg files
+      find ${{parameters.projectPath}} -type f -name "*.lg" -empty -delete
+      find ${{parameters.projectPath}} -type f -name "*.lu" -empty -delete
+
+      # publish luis app and extract json from response
+      bf luis:build --botName $(jq -r '.luis.name' ${{parameters.projectPath}}/settings/appsettings.json) --authoringKey $(${{parameters.luisAuthoringKeySecretName}}) --region $(jq -r '.luis.authoringRegion' ${{parameters.projectPath}}/settings/appsettings.json) --in ${{parameters.projectPath}} > luispublishoutput.txt
+      egrep "\{.*\}" luispublishoutput.txt > publishedluissettings.notquitejson
+      sed -i "s/'/\"/g" publishedluissettings.notquitejson
+      jq -n -f publishedluissettings.notquitejson > publishedluissettings.json
+
+      # join published app id with existing luis settings and restore into top level app settings
+      jq -s '.[0].luis + .[1]' ${{parameters.projectPath}}/settings/appsettings.json publishedluissettings.json > combinedluissettings.json
+      jq --argjson combined "$(<combinedluissettings.json)" '.luis = $combined' ${{parameters.projectPath}}/settings/appsettings.json > ${{parameters.projectPath}}/settings/appsettings.json.tmp
+      rm ${{parameters.projectPath}}/settings/appsettings.json
+      mv ${{parameters.projectPath}}/settings/appsettings.json.tmp ${{parameters.projectPath}}/settings/appsettings.json
+      
+      # delete any generated settings from local Composer UI deployments which could override published app id
+      find ${{parameters.projectPath}}/generated/ -type f -name "luis.settings.*" -delete 

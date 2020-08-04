@@ -1,0 +1,39 @@
+parameters:
+- name: projectPath
+  type: string
+  default: ''
+
+steps:
+- task: Bash@3
+  displayName: Prepare Bot
+  inputs:
+    targetType: 'inline'
+    script: |
+      # download latest runtime code from git
+      if [ ! -d ./runtime-git ]
+      then
+        mkdir ./runtime-git
+      fi
+
+      cd ./runtime-git
+
+      git init
+      git remote add -f origin https://github.com/microsoft/BotFramework-Composer.git
+      git config core.sparseCheckout true
+      cp ../Deploy/runtime-sparse-checkout.txt .git/info/sparse-checkout
+      git pull origin master
+      cd ..
+
+      # create build directory and copy runtime, as well as declarative assets from source
+      mkdir Build
+      cp -R ./runtime-git/runtime/dotnet/* Build
+      rm runtime-git -R
+      cp -R ${{parameters.projectPath}} Build/azurewebapp/ComposerDialogs/
+      cp -R ${{parameters.projectPath}} Build/azurefunctions/ComposerDialogs/
+
+      # copy skill manifests, if they exist
+      if [ -d ${{parameters.projectPath}}/manifests ]
+      then
+        cp -R ${{parameters.projectPath}}/manifests Build/azurewebapp/wwwroot/manifests/
+        cp -R ${{parameters.projectPath}}/manifests Build/azurefunctions/wwwroot/manifests/
+      fi

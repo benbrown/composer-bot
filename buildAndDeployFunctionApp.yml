@@ -1,0 +1,31 @@
+parameters:
+- name: resourceGroupServiceConnection
+  type: string
+  default: ''
+- name: functionAppResourceName
+  type: string
+  default: ''
+
+steps:
+- task: NuGetCommand@2
+  displayName: 'Restore Bot'
+  inputs:
+    command: 'custom'
+    arguments: 'restore Build/azurewebapp/Microsoft.BotFramework.Composer.Functions.csproj -recursive'
+- task: VSBuild@1
+  displayName: Build Bot
+  inputs:
+    solution: Build/azurewebappMicrosoft.BotFramework.Composer.Functions.csproj
+    vsVersion: "16.0"
+    msbuildArgs: >-
+      /p:DeployOnBuild=true /p:WebPublishMethod=Package
+      /p:PackageLocation="$(Build.ArtifactStagingDirectory)"
+    configuration: Release
+- task: AzureFunctionApp@1
+  inputs:
+    azureSubscription: 'DodecRG'
+    appType: 'functionApp'
+    azureSubscription: '${{parameters.resourceGroupServiceConnection}}'
+    appName: '${{parameters.functionAppResourceName}}'
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'
