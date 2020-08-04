@@ -6,15 +6,15 @@ pool: 'Hosted Windows 2019 with VS2019'
 steps:
 - template: publishAndConfigureLuis.yml
   parameters:
-    projectPath: './'
+    projectPath: '.'
     resourceGroupServiceConnection: 'Azure 6-22-1'
     keyVaultName: 'benbo-6-22-1-keyvault'
     luisAuthoringKeySecretName: 'luisAuthoringKey'
     luisEndpointKeySecretName: 'luisEndpointKey'
 - template: prepareBotDefaultRuntime.yml
   parameters:
-    projectPath: ''
+    projectPath: '.'
 - template: buildAndDeployAppService.yml
   parameters:
-    resourceGroupServiceConnection: ''
-    appServiceResourceName: ''
+    resourceGroupServiceConnection: 'Azure 6-22-1'
+    appServiceResourceName: 'benbo-6-22-1-dev'
