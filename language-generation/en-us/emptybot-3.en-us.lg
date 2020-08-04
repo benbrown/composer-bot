@@ -1,0 +1,14 @@
+[import](common.lg)
+
+# SendActivity_Welcome
+- ${WelcomeUser()}
+
+# toot
+- noodle
+- stoodle
+# SendActivity_0NbNOl()
+- DEMO COMPLETE: ${ dialog.email }
+# SendActivity_QUqBAy()
+- ${ MenuCard() }
+# SendActivity_3ral9v()
+- This is a demonstration of the "getEmail" dialog

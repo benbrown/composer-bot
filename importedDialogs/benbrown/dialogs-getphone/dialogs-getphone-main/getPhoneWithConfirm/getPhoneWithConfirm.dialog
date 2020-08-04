@@ -1,0 +1,113 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "BcpuW8",
+    "name": "getPhoneWithConfirm"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "PuWFxV"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "OVqHcS"
+          },
+          "condition": "!dialog.phone",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "6Xa0fo"
+              },
+              "activityProcessed": true,
+              "dialog": "getPhone",
+              "options": "{prompt:dialog.prompt, reprompt: dialog.reprompt}",
+              "resultProperty": "dialog.phone"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "HRg0nn"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": true,
+          "allowInterruptions": false,
+          "prompt": "${ConfirmInput_Prompt_HRg0nn()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "property": "turn.confirmed",
+          "unrecognizedPrompt": "${ConfirmInput_UnrecognizedPrompt_HRg0nn()}"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "yJy3O4"
+          },
+          "condition": "turn.confirmed == true && !@phonenumber",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "T3NXkf"
+              },
+              "value": "=dialog.phone"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "e1BaS8"
+              },
+              "condition": "@phonenumber != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "vJj0ly"
+                  },
+                  "activityProcessed": true,
+                  "options": "{ phone: @phonenumber, prompt: dialog.prompt, reprompt: dialog.reprompt, restart: dialog.restart, confirm: dialog.confirm}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "NY9QFc"
+                  },
+                  "activity": "${SendActivity_NY9QFc()}"
+                },
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "cp7zsk"
+                  },
+                  "activityProcessed": true,
+                  "options": "{ prompt: dialog.prompt, reprompt: dialog.reprompt, restart: dialog.restart, confirm: dialog.confirm}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "getPhoneWithConfirm.lg",
+  "recognizer": "getPhoneWithConfirm.lu"
+}

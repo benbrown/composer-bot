@@ -1,0 +1,115 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "vTULFi",
+    "name": "getEmailWithConfirm"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "FGyAZW"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "PGiy3T"
+          },
+          "condition": "!dialog.email",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "QrIt9e"
+              },
+              "activityProcessed": true,
+              "dialog": "getEmail",
+              "resultProperty": "dialog.email",
+              "options": "{prompt: dialog.prompt, reprompt: dialog.reprompt}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "sQdbWJ"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": true,
+          "allowInterruptions": false,
+          "prompt": "${ConfirmInput_Prompt_sQdbWJ()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "property": "turn.confirmed",
+          "unrecognizedPrompt": "${ConfirmInput_UnrecognizedPrompt_sQdbWJ()}"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "MIMatc"
+          },
+          "condition": "turn.confirmed == true && !@email",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "yT5cwk"
+              },
+              "value": "=dialog.email"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "zNFw6R"
+              },
+              "condition": "@email != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "rvrvZ6"
+                  },
+                  "activityProcessed": true,
+                  "allowLoop": false,
+                  "options": "{ email: @email, prompt: dialog.prompt, reprompt: dialog.reprompt, restart: dialog.restart, confirm: dialog.confirm}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "L7hIZq"
+                  },
+                  "activity": "${SendActivity_L7hIZq()}"
+                },
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "NLlMMp"
+                  },
+                  "activityProcessed": true,
+                  "allowLoop": false,
+                  "options": "{ prompt: dialog.prompt, reprompt: dialog.reprompt, restart: dialog.restart, confirm: dialog.confirm}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "getEmailWithConfirm.lg",
+  "recognizer": "getEmailWithConfirm.lu"
+}

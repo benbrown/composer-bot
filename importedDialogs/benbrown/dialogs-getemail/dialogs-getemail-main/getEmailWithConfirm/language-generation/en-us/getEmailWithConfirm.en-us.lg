@@ -1,0 +1,23 @@
+[import](common.lg)
+
+# ConfirmInput_Prompt_sQdbWJ()
+- IF: ${ dialog.confirm && dialog.confirm != ''} 
+ - ${ dialog.confirm } ${ dialog.email }
+- ELSE:
+- I got ${ dialog.email }. Is that correct?
+- I will use ${ dialog.email }. OK?
+- Is ${ dialog.email } the address you want to use?
+
+
+
+# ConfirmInput_UnrecognizedPrompt_sQdbWJ()
+- ```If this isn't the email address you want to use, you can say "no", or you just tell me a new email address.
+
+So is ${ dialog.email} ok to use?```
+# SendActivity_L7hIZq()
+- IF: ${ dialog.restart && dialog.restart != ''} 
+ - ${ dialog.restart }
+- ELSE:
+- Let me back up.
+- Let me try again.
+- Sorry, let me start over.

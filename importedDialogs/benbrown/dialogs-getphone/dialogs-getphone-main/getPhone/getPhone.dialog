@@ -1,0 +1,48 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "qoP0c6",
+    "name": "getPhone"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "KRGNJS"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "8hieTx"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": true,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_8hieTx()}",
+          "property": "dialog.phone",
+          "value": "=@phonenumber",
+          "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt_8hieTx()}",
+          "invalidPrompt": "${TextInput_InvalidPrompt_8hieTx()}",
+          "validations": [
+            "@phonenumber != null"
+          ],
+          "defaultValueResponse": "${TextInput_DefaultValueResponse_8hieTx()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Ab2llW"
+          },
+          "value": "=dialog.phone"
+        }
+      ]
+    }
+  ],
+  "generator": "getPhone.lg",
+  "recognizer": "getPhone.lu"
+}

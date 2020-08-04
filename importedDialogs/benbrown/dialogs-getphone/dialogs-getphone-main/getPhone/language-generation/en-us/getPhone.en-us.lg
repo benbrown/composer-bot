@@ -1,0 +1,19 @@
+[import](common.lg)
+
+# TextInput_Prompt_8hieTx()
+- IF: ${ dialog.prompt && dialog.prompt != '' } 
+  - ${ dialog.prompt }
+- ELSE:
+ - Please provide a valid phone number
+# TextInput_UnrecognizedPrompt_8hieTx()
+- IF: ${ dialog.reprompt && dialog.reprompt != '' } 
+  - ${ dialog.reprompt }
+- ELSE:
+ - Sorry, that wasn't a valid phone number. Please try again.
+# TextInput_InvalidPrompt_8hieTx()
+- IF: ${ dialog.reprompt && dialog.reprompt != '' } 
+  - ${ dialog.reprompt }
+- ELSE:
+ - Sorry, that wasn't a valid phone number. Please try again.
+# TextInput_DefaultValueResponse_8hieTx()
+- 

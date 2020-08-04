@@ -1,0 +1,22 @@
+[import](common.lg)
+
+# ConfirmInput_Prompt_HRg0nn()
+- IF: ${ dialog.confirm && dialog.confirm != ''} 
+ - ${ dialog.confirm } ${ dialog.phone }
+- ELSE:
+- I got ${ dialog.phone }. Is that correct?
+- I will use ${ dialog.phone }. OK?
+- Is ${ dialog.phone } the address you want to use?
+
+
+# ConfirmInput_UnrecognizedPrompt_HRg0nn()
+- ```If this isn't the phone number you want to use, you can say "no", or you just tell me a new phone number.
+
+So is ${ dialog.phone} ok to use?```
+# SendActivity_NY9QFc()
+- IF: ${ dialog.restart && dialog.restart != ''} 
+ - ${ dialog.restart }
+- ELSE:
+- Let me back up.
+- Let me try again.
+- Sorry, let me start over.

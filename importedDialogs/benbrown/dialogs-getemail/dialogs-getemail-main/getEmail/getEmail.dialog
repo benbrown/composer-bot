@@ -1,0 +1,65 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "sF121t",
+    "name": "getEmail"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "Wrc7vK"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "V3lvpO"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": true,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_V3lvpO()}",
+          "property": "dialog.email",
+          "outputFormat": "=trim(this.value)",
+          "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt_V3lvpO()}",
+          "invalidPrompt": "${TextInput_InvalidPrompt_V3lvpO()}",
+          "value": "=@email",
+          "validations": [
+            "@email != null"
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "q3kIHZ"
+          },
+          "condition": "dialog.email == null",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "C1ZRIY"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "Z4EQAz"
+              },
+              "value": "=dialog.email"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "getEmail.lg",
+  "recognizer": "getEmail.lu"
+}

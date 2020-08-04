@@ -1,0 +1,43 @@
+# WelcomeUser
+- Hello human!
+- Hello, flesh creature!
+- Oh hello, HU-MAN.
+- Human detected!
+- GREETINGS USER
+
+# MenuCard()
+[Activity
+    Attachments = ${json(MenuCardJSON())}
+]
+
+# MenuCardJSON()
+- ```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "Select from my primary functions"
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.Submit",
+                    "title": "Email",
+                    "data": "email",
+                    "id": "email"
+                },
+                {
+                    "type": "Action.Submit",
+                    "title": "Phone",
+                    "data": "phone",
+                    "id": "phone"
+                }
+            ]
+        }
+    ]
+}
+```

@@ -1,0 +1,19 @@
+[import](common.lg)
+
+# TextInput_Prompt_V3lvpO()
+- IF: ${ dialog.prompt && dialog.prompt != '' } 
+  - ${ dialog.prompt }
+- ELSE:
+ - Please provide a valid email address
+ - Give me an email an address
+ - Please tell me how to email you
+# TextInput_UnrecognizedPrompt_V3lvpO()
+- IF: ${ dialog.reprompt && dialog.reprompt != '' } 
+  - ${ dialog.reprompt }
+- ELSE:
+ - Sorry, that wasn't a valid email address. Please try again.
+# TextInput_InvalidPrompt_V3lvpO()
+- IF: ${ dialog.reprompt && dialog.reprompt != '' } 
+  - ${ dialog.reprompt }
+- ELSE:
+ - Sorry, that wasn't a valid email address. Please try again.
