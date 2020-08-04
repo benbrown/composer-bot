@@ -29,8 +29,13 @@ steps:
       mkdir Build
       cp -R ./runtime/* Build
       rm runtime -R
-      rsync -rv --exclude=Build ${{parameters.projectPath}} Build/azurewebapp/ComposerDialogs/
-      rsync -rv --exclude=Build ${{parameters.projectPath}} Build/azurefunctions/ComposerDialogs/
+      cp -R ${{parameters.projectPath}}/*.dialog Build/azurewebapp/ComposerDialogs/
+      cp -R ${{parameters.projectPath}}/settings Build/azurewebapp/ComposerDialogs/
+      cp -R ${{parameters.projectPath}}/generated/ Build/azurewebapp/ComposerDialogs/
+      cp -R ${{parameters.projectPath}}/dialogs/ Build/azurewebapp/ComposerDialogs/
+      cp -R ${{parameters.projectPath}}/importedDialogs/ Build/azurewebapp/ComposerDialogs/
+      cp -R ${{parameters.projectPath}}/language-generation/ Build/azurewebapp/ComposerDialogs/
+      cp -R ${{parameters.projectPath}}/language-understanding/ Build/azurewebapp/ComposerDialogs/
 
       # copy skill manifests, if they exist
       if [ -d ${{parameters.projectPath}}/manifests ]

@@ -1,8 +1,7 @@
 trigger:
 - master
 
-pool: 
-  vmImage: 'ubuntu-latest'
+pool: 'Hosted Windows 2019 with VS2019'
 
 steps:
 - template: publishAndConfigureLuis.yml
