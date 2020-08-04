@@ -27,10 +27,10 @@ steps:
 
       # create build directory and copy runtime, as well as declarative assets from source
       mkdir Build
-      cp -R ./runtime/dotnet/* Build
+      cp -R ./runtime/* Build
       rm runtime -R
-      cp -R ${{parameters.projectPath}} Build/azurewebapp/ComposerDialogs/
-      cp -R ${{parameters.projectPath}} Build/azurefunctions/ComposerDialogs/
+      rsync -rv --exclude=Build ${{parameters.projectPath}} Build/azurewebapp/ComposerDialogs/
+      rsync -rv --exclude=Build ${{parameters.projectPath}} Build/azurefunctions/ComposerDialogs/
 
       # copy skill manifests, if they exist
       if [ -d ${{parameters.projectPath}}/manifests ]
