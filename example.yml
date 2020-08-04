@@ -13,8 +13,8 @@ steps:
     luisEndpointKeySecretName: 'luisEndpointKey'
 - template: prepareBotDefaultRuntime.yml
   parameters:
-    projectPath: ''
+    projectPath: './'
 - template: buildAndDeployAppService.yml
   parameters:
-    resourceGroupServiceConnection: ''
-    appServiceResourceName: ''
+    resourceGroupServiceConnection: 'Azure 6-22-1'
+    appServiceResourceName: 'benbo-6-22-1-dev'
