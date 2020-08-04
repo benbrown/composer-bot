@@ -10,24 +10,25 @@ steps:
     targetType: 'inline'
     script: |
       # download latest runtime code from git
-      if [ ! -d ./runtime-git ]
+      if [ ! -d ./runtime ]
       then
-        mkdir ./runtime-git
+        mkdir ./runtime
+        cd ./runtime
+
+        git init
+        git remote add -f origin https://github.com/microsoft/BotFramework-Composer.git
+        git config core.sparseCheckout true
+        cp ../Deploy/runtime-sparse-checkout.txt .git/info/sparse-checkout
+        git pull origin master
+        cp -R runtime/* .
+        rmdir runtime
+        cd ..
       fi
-
-      cd ./runtime-git
-
-      git init
-      git remote add -f origin https://github.com/microsoft/BotFramework-Composer.git
-      git config core.sparseCheckout true
-      cp ../Deploy/runtime-sparse-checkout.txt .git/info/sparse-checkout
-      git pull origin master
-      cd ..
 
       # create build directory and copy runtime, as well as declarative assets from source
       mkdir Build
-      cp -R ./runtime-git/runtime/dotnet/* Build
-      rm runtime-git -R
+      cp -R ./runtime/dotnet/* Build
+      rm runtime -R
       cp -R ${{parameters.projectPath}} Build/azurewebapp/ComposerDialogs/
       cp -R ${{parameters.projectPath}} Build/azurefunctions/ComposerDialogs/
 
