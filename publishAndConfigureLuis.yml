@@ -15,6 +15,10 @@ parameters:
   type: string
   default: ''
 
+variables:
+- name: luisApps
+  value: []
+
 steps:
 - task: AzureKeyVault@1
   displayName: Get Secrets
@@ -48,18 +52,7 @@ steps:
       rm ${{parameters.projectPath}}/settings/appsettings.json
       mv ${{parameters.projectPath}}/settings/appsettings.json.tmp ${{parameters.projectPath}}/settings/appsettings.json
 
-      # egrep "\{.*\}" luispublishoutput.txt > publishedluissettings.notquitejson
-      # sed -i "s/'/\"/g" publishedluissettings.notquitejson
-      # jq -n -f publishedluissettings.notquitejson > publishedluissettings.json
-
-      # join published app id with existing luis settings and restore into top level app settings
-      # jq -s '.[0].luis + .[1]' ${{parameters.projectPath}}/settings/appsettings.json publishedluissettings.json > combinedluissettings.json
-      # jq --argjson combined "$(<combinedluissettings.json)" '.luis = $combined' ${{parameters.projectPath}}/settings/appsettings.json > ${{parameters.projectPath}}/settings/appsettings.json.tmp
-      # rm ${{parameters.projectPath}}/settings/appsettings.json
-      # mv ${{parameters.projectPath}}/settings/appsettings.json.tmp ${{parameters.projectPath}}/settings/appsettings.json
-      
-      # needs to assign endpoint keys to all these apps
-      # needs to make sure we get all the app id mappings correctly... or use the generated files instead!
-
-      # delete any generated settings from local Composer UI deployments which could override published app id
-      # find ${{parameters.projectPath}}/generated/ -type f -name "luis.settings.*" -delete 
+      # Now we need to assign the endpoint key to all of the luis apps
+      # get an array of the luis app names/ids in the form [[name,id],[name,id]]
+      echo "##vso[task.setvariable variable=luisApps] $( jq '.luis' generated/*.json | jq 'to_entries | map([.key, .value])')"
+      echo "GOT LIST OF LUIS APPS $(luisApps)"
