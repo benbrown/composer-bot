@@ -30,6 +30,7 @@ steps:
     script: |
       # set key in app settings
       jq '.MicrosoftAppId = "$(${{parameters.microsoftAppIdSecretName}})"' ${{parameters.projectPath}}/settings/appsettings.json > ${{parameters.projectPath}}/settings/appsettings.json.tmp
-      jq '.MicrosoftAppPassword = "$(${{parameters.microsoftAppPasswordSecretName}})"' ${{parameters.projectPath}}/settings/appsettings.json.tmp > ${{parameters.projectPath}}/settings/appsettings.json.tmp
+      jq '.MicrosoftAppPassword = "$(${{parameters.microsoftAppPasswordSecretName}})"' ${{parameters.projectPath}}/settings/appsettings.json.tmp > ${{parameters.projectPath}}/settings/appsettings.json.tmp2
       rm ${{parameters.projectPath}}/settings/appsettings.json
-      mv ${{parameters.projectPath}}/settings/appsettings.json.tmp ${{parameters.projectPath}}/settings/appsettings.json
+      rm ${{parameters.projectPath}}/settings/appsettings.json.tmp
+      mv ${{parameters.projectPath}}/settings/appsettings.json.tmp2 ${{parameters.projectPath}}/settings/appsettings.json
