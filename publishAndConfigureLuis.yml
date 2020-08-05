@@ -52,5 +52,8 @@ steps:
       rm ${{parameters.projectPath}}/settings/appsettings.json
       mv ${{parameters.projectPath}}/settings/appsettings.json.tmp ${{parameters.projectPath}}/settings/appsettings.json
       
+      # needs to assign endpoint keys to all these apps
+      # needs to make sure we get all the app id mappings correctly... or use the generated files instead!
+
       # delete any generated settings from local Composer UI deployments which could override published app id
       find ${{parameters.projectPath}}/generated/ -type f -name "luis.settings.*" -delete 
