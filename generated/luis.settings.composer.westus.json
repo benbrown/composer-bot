@@ -1,9 +1,0 @@
-{
-    "luis": {
-        "emptybot_3_en_us_lu": "d9c4e064-8f72-4679-8394-fd9cde877f1d",
-        "getPhone_en_us_lu": "0520c2ed-e405-40a5-b675-b2c17e423ece",
-        "getEmailWithConfirm_en_us_lu": "4c8b8d03-be38-4632-a7da-bc370593ea2e",
-        "getPhoneWithConfirm_en_us_lu": "11e8eda1-68dd-4ee0-a868-39b5df9f383a",
-        "getEmail_en_us_lu": "15bba8fe-d91f-467c-9b1f-44f3589a1dd4"
-    }
-}

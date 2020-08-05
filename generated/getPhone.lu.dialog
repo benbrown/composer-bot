@@ -1,8 +1,0 @@
-{
-    "$kind": "Microsoft.MultiLanguageRecognizer",
-    "id": "LUIS_getPhone",
-    "recognizers": {
-        "en-us": "getPhone.en-us.lu",
-        "": "getPhone.en-us.lu"
-    }
-}

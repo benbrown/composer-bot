@@ -1,8 +1,0 @@
-{
-    "$kind": "Microsoft.MultiLanguageRecognizer",
-    "id": "LUIS_getEmail",
-    "recognizers": {
-        "en-us": "getEmail.en-us.lu",
-        "": "getEmail.en-us.lu"
-    }
-}
