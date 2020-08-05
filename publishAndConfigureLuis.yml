@@ -49,9 +49,9 @@ steps:
 
       # Now we need to assign the endpoint key to all of the luis apps
       # get an array of the luis app names/ids in the form [[name,id],[name,id]]
-      luisApps=$( jq '.luis' generated/*.json | jq 'to_entries | map([.key, .value])')
+      luisApps=($( jq '.luis' generated/*.json | jq 'to_entries | map([.value])'))
       echo "GOT LIST OF LUIS APPS $luisApps"
       for luisApp in luisApps
       do
-        echo "Assign key for $luisApp[1]"
+        echo "Assign key for $luisApp"
       done 
