@@ -31,14 +31,19 @@ steps:
     inlineScript: 'az account get-access-token | jq > access.json'
     useGlobalConfig: true
 - task: Bash@3
-  displayName: Publish Luis and Set App Configuration
-  inputs:
+  displayName: Extract account details
+  inputs: 
     targetType: 'inline'
     script: |
       echo "CONTENT OF ACCESS>JSON"
       cat access.json
       echo "##vso[task.setvariable variable=token] $(jq '.accessToken' access.json)"
       echo "##vso[task.setvariable variable=subId] $(jq '.subscription' access.json)"
+- task: Bash@3
+  displayName: Publish Luis and Set App Configuration
+  inputs:
+    targetType: 'inline'
+    script: |
       echo "we can use $(token) and $(subId)" to do this!"
 
       # set key in app settings
