@@ -38,7 +38,7 @@ steps:
       token=$( jq '.accessToken' access.json)
       subId=$( jq '.subscription' access.json)
       echo "we can use $token and $subId" to do this!"
-      
+
       # set key in app settings
       jq '.luis.endpointKey = "$(${{parameters.luisEndpointKeySecretName}})"' ${{parameters.projectPath}}/settings/appsettings.json > ${{parameters.projectPath}}/settings/appsettings.json.tmp
       rm ${{parameters.projectPath}}/settings/appsettings.json
@@ -58,8 +58,6 @@ steps:
       jq -s '.[0] * .[1]' generated/*.json settings/appsettings.json > ${{parameters.projectPath}}/settings/appsettings.json.tmp
       rm ${{parameters.projectPath}}/settings/appsettings.json
       mv ${{parameters.projectPath}}/settings/appsettings.json.tmp ${{parameters.projectPath}}/settings/appsettings.json
-
-      azAccessToken=$(az account get-access-token --output json | jq)
 
       # Now we need to assign the endpoint key to all of the luis apps
       # get an array of the luis app names/ids in the form [[name,id],[name,id]]
