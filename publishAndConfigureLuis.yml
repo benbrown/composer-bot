@@ -14,11 +14,6 @@ parameters:
 - name: luisEndpointKeySecretName
   type: string
   default: ''
-
-variables:
-- name: luisApps
-  value: []
-
 steps:
 - task: AzureKeyVault@1
   displayName: Get Secrets
@@ -29,6 +24,9 @@ steps:
     RunAsPreJob: false
 - task: Bash@3
   displayName: Publish Luis and Set App Configuration
+  variables:
+  - name: luisApps
+    value: []
   inputs:
     targetType: 'inline'
     script: |
