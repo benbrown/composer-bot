@@ -37,9 +37,9 @@ steps:
     script: |
       echo "CONTENT OF ACCESS>JSON"
       cat access.json
-      token=$( jq '.accessToken' access.json)
-      subId=$( jq '.subscription' access.json)
-      echo "we can use $token and $subId" to do this!"
+      echo "##vso[task.setvariable variable=token] $(jq '.accessToken' access.json)"
+      echo "##vso[task.setvariable variable=subId] $(jq '.subscription' access.json)"
+      echo "we can use $(token) and $(subId)" to do this!"
 
       # set key in app settings
       jq '.luis.endpointKey = "$(${{parameters.luisEndpointKeySecretName}})"' ${{parameters.projectPath}}/settings/appsettings.json > ${{parameters.projectPath}}/settings/appsettings.json.tmp
