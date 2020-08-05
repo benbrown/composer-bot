@@ -28,13 +28,15 @@ steps:
     azureSubscription: '${{parameters.resourceGroupServiceConnection}}'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az account get-access-token > access.json'
+    inlineScript: 'az account get-access-token | jq > access.json'
     useGlobalConfig: true
 - task: Bash@3
   displayName: Publish Luis and Set App Configuration
   inputs:
     targetType: 'inline'
     script: |
+      echo "CONTENT OF ACCESS>JSON"
+      cat access.json
       token=$( jq '.accessToken' access.json)
       subId=$( jq '.subscription' access.json)
       echo "we can use $token and $subId" to do this!"
