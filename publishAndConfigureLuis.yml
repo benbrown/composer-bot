@@ -68,6 +68,5 @@ steps:
 
       # Now we need to assign the endpoint key to all of the luis apps
       # get an array of the luis app names/ids in the form [[name,id],[name,id]]
-      jq '.luis' generated/*.json | jq 'to_entries | map([.value])' | jq '.[][0]' | while IFS= read -r line ; do bf:luis:application:assignazureaccount --accountName benbo-6-22-1-dev-luis --resourceGroup benbo-6-22-1-dev
---armToken $(token) --azureSubscriptionId $(subId) --appId $line --subscriptionKey $(${{parameters.luisAuthoringKeySecretName}}) ; done
+      jq '.luis' generated/*.json | jq 'to_entries | map([.value])' | jq '.[][0]' | while IFS= read -r line ; do bf:luis:application:assignazureaccount --accountName benbo-6-22-1-dev-luis --resourceGroup benbo-6-22-1-dev --armToken $(token) --azureSubscriptionId $(subId) --appId $line --subscriptionKey $(${{parameters.luisAuthoringKeySecretName}}) ; done
       #jq '.luis' generated/*.json | jq 'to_entries | map([.value])' | jq '.[][0]' | while IFS= read -r line ; do echo "this is $line with $token"; done
