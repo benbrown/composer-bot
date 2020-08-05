@@ -42,6 +42,12 @@ steps:
 
       # publish luis app and extract json from response
       bf luis:build --botName $(jq -r '.luis.name' ${{parameters.projectPath}}/settings/appsettings.json) --authoringKey $(${{parameters.luisAuthoringKeySecretName}}) --region $(jq -r '.luis.authoringRegion' ${{parameters.projectPath}}/settings/appsettings.json) --in ${{parameters.projectPath}} --out ${{parameters.projectPath}}/generated --dialog=multiLanguage
+      
+      # merge resulting generated settings into the appsettings file
+      jq -s '.[0] * .[1]' generated/*.json settings/appsettings.json > ${{parameters.projectPath}}/settings/appsettings.json.tmp
+      rm ${{parameters.projectPath}}/settings/appsettings.json
+      mv ${{parameters.projectPath}}/settings/appsettings.json.tmp ${{parameters.projectPath}}/settings/appsettings.json
+
       # egrep "\{.*\}" luispublishoutput.txt > publishedluissettings.notquitejson
       # sed -i "s/'/\"/g" publishedluissettings.notquitejson
       # jq -n -f publishedluissettings.notquitejson > publishedluissettings.json
