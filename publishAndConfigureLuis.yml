@@ -44,7 +44,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      echo "we can use $(token) and $(subId)" to do this!"
+      echo "we can use $(token) and $(subId) to do this!"
 
       # set key in app settings
       jq '.luis.endpointKey = "$(${{parameters.luisEndpointKeySecretName}})"' ${{parameters.projectPath}}/settings/appsettings.json > ${{parameters.projectPath}}/settings/appsettings.json.tmp
