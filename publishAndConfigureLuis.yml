@@ -22,11 +22,23 @@ steps:
     KeyVaultName: '${{parameters.keyVaultName}}'
     SecretsFilter: '*'
     RunAsPreJob: false
+- task: AzureCLI@2
+  displayName: Get Azure Account details
+  inputs:
+    azureSubscription: '${{parameters.resourceGroupServiceConnection}}'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az account get-access-token > access.json'
+    useGlobalConfig: true
 - task: Bash@3
   displayName: Publish Luis and Set App Configuration
   inputs:
     targetType: 'inline'
     script: |
+      token=$( jq '.accessToken' access.json)
+      subId=$( jq '.subscription' access.json)
+      echo "we can use $token and $subId" to do this!"
+      
       # set key in app settings
       jq '.luis.endpointKey = "$(${{parameters.luisEndpointKeySecretName}})"' ${{parameters.projectPath}}/settings/appsettings.json > ${{parameters.projectPath}}/settings/appsettings.json.tmp
       rm ${{parameters.projectPath}}/settings/appsettings.json
@@ -52,4 +64,4 @@ steps:
       # Now we need to assign the endpoint key to all of the luis apps
       # get an array of the luis app names/ids in the form [[name,id],[name,id]]
       # jq '.luis' generated/*.json | jq 'to_entries | map([.value])' | jq '.[][0]' | while IFS= read -r line ; do bf:luis:application:assignazureaccount --accountName= --appId=$line --armToken=; done
-      jq '.luis' generated/*.json | jq 'to_entries | map([.value])' | jq '.[][0]' | while IFS= read -r line ; do echo "this is $line with $azAccessToken.accessToken"; done
+      jq '.luis' generated/*.json | jq 'to_entries | map([.value])' | jq '.[][0]' | while IFS= read -r line ; do echo "this is $line with ${{ azAccessToken.accessToken}}"; done
