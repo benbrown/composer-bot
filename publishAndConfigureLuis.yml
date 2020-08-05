@@ -47,11 +47,9 @@ steps:
       rm ${{parameters.projectPath}}/settings/appsettings.json
       mv ${{parameters.projectPath}}/settings/appsettings.json.tmp ${{parameters.projectPath}}/settings/appsettings.json
 
+      azAccessToken=$(az account get-access-token --output json | jq)
+
       # Now we need to assign the endpoint key to all of the luis apps
       # get an array of the luis app names/ids in the form [[name,id],[name,id]]
-      luisApps=($( jq '.luis' generated/*.json | jq 'to_entries | map([.value])'))
-      echo "GOT LIST OF LUIS APPS $luisApps"
-      for luisApp in luisApps
-      do
-        echo "Assign key for $luisApp"
-      done 
+      # jq '.luis' generated/*.json | jq 'to_entries | map([.value])' | jq '.[][0]' | while IFS= read -r line ; do bf:luis:application:assignazureaccount --accountName= --appId=$line --armToken=; done
+      jq '.luis' generated/*.json | jq 'to_entries | map([.value])' | jq '.[][0]' | while IFS= read -r line ; do echo "this is $line with $azAccessToken.accessToken"; done
