@@ -1,7 +1,0 @@
-{
-    "$kind": "Microsoft.MultiLanguageRecognizer",
-    "recognizers": {
-        "en-us": "getEmail.en-us.lu",
-        "": "getEmail.en-us.lu"
-    }
-}
