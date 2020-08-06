@@ -20,7 +20,7 @@ steps:
         git config core.sparseCheckout true
         cp ../Deploy/runtime-sparse-checkout.txt .git/info/sparse-checkout
         git pull origin master
-        cp -R runtime/* .
+        cp -R runtime/dotnet/* .
         rmdir -R runtime
         cd ..
       fi
