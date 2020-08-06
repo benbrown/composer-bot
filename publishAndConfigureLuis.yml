@@ -38,8 +38,8 @@ steps:
       echo "CONTENT OF ACCESS>JSON"
       cat access.json
       # TODO: strip quote marks from these values
-      echo "##vso[task.setvariable variable=token] $(jq '.accessToken' access.json | sed -e 's/^"//' -e 's/"$//')"
-      echo "##vso[task.setvariable variable=subId] $(jq '.subscription' access.json | sed -e 's/^"//' -e 's/"$//')"
+      echo "##vso[task.setvariable variable=token] $(jq '.accessToken' access.json | sed -e 's/^\"//' -e 's/\"$//')"
+      echo "##vso[task.setvariable variable=subId] $(jq '.subscription' access.json | sed -e 's/^\"//' -e 's/\"$//')"
 - task: Bash@3
   displayName: Publish Luis and Set App Configuration
   inputs:
