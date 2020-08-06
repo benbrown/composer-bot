@@ -26,4 +26,4 @@ steps:
 - template: buildAndDeployAppService.yml
   parameters:
     resourceGroupServiceConnection: 'prod-deploy-service-connection'
-    appServiceResourceName: 'benbo-6-22-1-dev'
+    appServiceResourceName: 'benbo-6-23-1-dev'
