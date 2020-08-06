@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "recognizers": {
+        "en-us": "getPhoneWithConfirm.en-us.lu",
+        "": "getPhoneWithConfirm.en-us.lu"
+    }
+}

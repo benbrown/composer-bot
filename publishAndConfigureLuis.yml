@@ -35,9 +35,6 @@ steps:
   inputs: 
     targetType: 'inline'
     script: |
-      echo "CONTENT OF ACCESS>JSON"
-      cat access.json
-      # TODO: strip quote marks from these values
       echo "##vso[task.setvariable variable=token]$(jq '.accessToken' access.json | sed -e 's/^\"//' -e 's/"$//')"
       echo "##vso[task.setvariable variable=subId]$(jq '.subscription' access.json | sed -e 's/^"//' -e 's/"$//')"
 - task: Bash@3
@@ -45,8 +42,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      echo "we can use $(token) and $(subId) to do this!"
-
       # set key in app settings
       jq '.luis.endpointKey = "$(${{parameters.luisEndpointKeySecretName}})"' ${{parameters.projectPath}}/settings/appsettings.json > ${{parameters.projectPath}}/settings/appsettings.json.tmp
       rm ${{parameters.projectPath}}/settings/appsettings.json
@@ -70,4 +65,3 @@ steps:
       # Now we need to assign the endpoint key to all of the luis apps
       # get an array of the luis app names/ids in the form [[name,id],[name,id]]
       jq '.luis' generated/*.json | jq 'to_entries | map([.value])' | jq '.[][0]' | while IFS= read -r line ; do id=$(echo $line | sed -e 's/^\"//' -e 's/"$//'); bf luis:application:assignazureaccount --accountName benbo-6-22-1-dev-luis --resourceGroup benbo-6-22-1-dev --armToken $(token) --azureSubscriptionId $(subId) --appId $id --subscriptionKey $(${{parameters.luisAuthoringKeySecretName}}) --endpoint https://$(jq -r '.luis.authoringRegion' ${{parameters.projectPath}}/settings/appsettings.json).api.cognitive.microsoft.com; done
-      #jq '.luis' generated/*.json | jq 'to_entries | map([.value])' | jq '.[][0]' | while IFS= read -r line ; do echo "this is $line with $token"; done

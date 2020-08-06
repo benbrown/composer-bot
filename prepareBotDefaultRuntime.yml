@@ -21,7 +21,7 @@ steps:
         cp ../Deploy/runtime-sparse-checkout.txt .git/info/sparse-checkout
         git pull origin master
         cp -R runtime/* .
-        rmdir runtime
+        rmdir -R runtime
         cd ..
       fi
 
