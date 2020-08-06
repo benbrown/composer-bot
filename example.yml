@@ -7,14 +7,14 @@ steps:
 - template: writeAppSettings.yml
   parameters:
     projectPath: '.'
-    resourceGroupServiceConnection: 'Azure 6-22-1'
+    resourceGroupServiceConnection: 'prod-deploy-service-connection'
     keyVaultName: 'benbo-6-22-1-keyvault'
     microsoftAppIdSecretName: 'microsoftAppId'
     microsoftAppPasswordSecretName: 'microsoftAppPassword'
 - template: publishAndConfigureLuis.yml
   parameters:
     projectPath: '.'
-    resourceGroupServiceConnection: 'Azure 6-22-1'
+    resourceGroupServiceConnection: 'prod-deploy-service-connection'
     keyVaultName: 'benbo-6-22-1-keyvault'
     luisResourceName: 'benbo-6-22-1-dev-luis'
     resourceGroupName: 'benbo-6-22-1-dev'
@@ -25,5 +25,5 @@ steps:
     projectPath: '.'
 - template: buildAndDeployAppService.yml
   parameters:
-    resourceGroupServiceConnection: 'Azure 6-22-1'
+    resourceGroupServiceConnection: 'prod-deploy-service-connection'
     appServiceResourceName: 'benbo-6-22-1-dev'
