@@ -8,16 +8,16 @@ steps:
   parameters:
     projectPath: '.'
     resourceGroupServiceConnection: 'prod-deploy-service-connection'
-    keyVaultName: 'benbo-6-22-1-keyvault'
+    keyVaultName: 'benbo-6-23-1-keyvault'
     microsoftAppIdSecretName: 'microsoftAppId'
     microsoftAppPasswordSecretName: 'microsoftAppPassword'
 - template: publishAndConfigureLuis.yml
   parameters:
     projectPath: '.'
     resourceGroupServiceConnection: 'prod-deploy-service-connection'
-    keyVaultName: 'benbo-6-22-1-keyvault'
-    luisResourceName: 'benbo-6-22-1-dev-luis'
-    resourceGroupName: 'benbo-6-22-1-dev'
+    keyVaultName: 'benbo-6-23-1-keyvault'
+    luisResourceName: 'benbo-6-23-1-dev-luis'
+    resourceGroupName: 'benbo-6-23-1-dev'
     luisAuthoringKeySecretName: 'luisAuthoringKey'
     luisEndpointKeySecretName: 'luisEndpointKey'
 - template: prepareBotDefaultRuntime.yml
