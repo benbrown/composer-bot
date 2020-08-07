@@ -42,6 +42,13 @@
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
+                    "id": "Vz66Hk"
+                  },
+                  "activity": "${SendActivity_Vz66Hk()}"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
                     "id": "QUqBAy"
                   },
                   "activity": "${SendActivity_QUqBAy()}"
