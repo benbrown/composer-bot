@@ -42,6 +42,13 @@
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
+                    "id": "eHNBft"
+                  },
+                  "activity": "${SendActivity_eHNBft()}"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
                     "id": "QUqBAy"
                   },
                   "activity": "${SendActivity_QUqBAy()}"
