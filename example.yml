@@ -3,21 +3,27 @@ trigger:
 
 pool: 'Hosted Windows 2019 with VS2019'
 
+variables:
+  resourceGroupServiceConnection: 'Azure 6-22-1'
+  keyVaultName: 'benbo-6-22-1-keyvault'
+  luisResourceName: 'benbo-6-22-1-dev-luis'
+  resourceGroupName: 'benbo-6-22-1-dev'
+
 steps:
 - template: writeAppSettings.yml
   parameters:
     projectPath: '.'
-    resourceGroupServiceConnection: 'Azure 6-22-1'
-    keyVaultName: 'benbo-6-22-1-keyvault'
+    resourceGroupServiceConnection: $(resourceGroupServiceConnection)
+    keyVaultName: $(keyVaultName) 
     microsoftAppIdSecretName: 'microsoftAppId'
     microsoftAppPasswordSecretName: 'microsoftAppPassword'
 - template: publishAndConfigureLuis.yml
   parameters:
     projectPath: '.'
-    resourceGroupServiceConnection: 'Azure 6-22-1'
-    keyVaultName: 'benbo-6-22-1-keyvault'
-    luisResourceName: 'benbo-6-22-1-dev-luis'
-    resourceGroupName: 'benbo-6-22-1-dev'
+    resourceGroupServiceConnection: $(resourceGroupServiceConnection)
+    keyVaultName: $(keyVaultName)
+    luisResourceName: $(luisResourceName)
+    resourceGroupName: $(resourceGroupName)
     luisAuthoringKeySecretName: 'luisAuthoringKey'
     luisEndpointKeySecretName: 'luisEndpointKey'
 - template: prepareBotDefaultRuntime.yml
@@ -25,5 +31,5 @@ steps:
     projectPath: '.'
 - template: buildAndDeployAppService.yml
   parameters:
-    resourceGroupServiceConnection: 'Azure 6-22-1'
-    appServiceResourceName: 'benbo-6-22-1-dev'
+    resourceGroupServiceConnection: $(resourceGroupServiceConnection)
+    appServiceResourceName: $(resourceGroupName)
