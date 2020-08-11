@@ -3,11 +3,16 @@ trigger:
 
 pool: 'Hosted Windows 2019 with VS2019'
 
+# Set the following variables
+# resourceGroupName - name of the resource group containing bot resources
+# resourceGroupServiceConnection - name of the service principal that has access to resource group where bot resources live
+# keyVaultName - name of the key vault resource in that resource group
+# luisResourceName - name of the luis authoring key resource
 variables:
+  resourceGroupName: 'benbo-6-22-1-dev'
+  luisResourceName: 'benbo-6-22-1-dev-luis'
   resourceGroupServiceConnection: 'Azure 6-22-1'
   keyVaultName: 'benbo-6-22-1-keyvault'
-  luisResourceName: 'benbo-6-22-1-dev-luis'
-  resourceGroupName: 'benbo-6-22-1-dev'
 
 steps:
 - template: writeAppSettings.yml
