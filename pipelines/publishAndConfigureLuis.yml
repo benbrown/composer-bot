@@ -56,10 +56,6 @@ steps:
       # get bf-cli
       npm i -g @microsoft/botframework-cli
 
-      # delete empty lu and lg files
-      find ${{parameters.projectPath}} -type f -name "*.lg" -empty -delete
-      find ${{parameters.projectPath}} -type f -name "*.lu" -empty -delete
-
       # publish luis app and extract json from response
       bf luis:build --botName $(jq -r '.luis.name' ${{parameters.projectPath}}/settings/appsettings.json) --authoringKey $(${{parameters.luisAuthoringKeySecretName}}) --region $(jq -r '.luis.authoringRegion' ${{parameters.projectPath}}/settings/appsettings.json) --in ${{parameters.projectPath}} --out ${{parameters.projectPath}}/generated --dialog=multiLanguage
       
