@@ -87,23 +87,23 @@
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "cG3aYS",
-        "name": "deploymenttest"
+        "id": "YWclm8",
+        "name": "DeploymentTest"
       },
-      "intent": "deploymenttest",
+      "intent": "DeploymentTest",
       "actions": [
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "nBxuTg"
+            "id": "z9FZNM"
           },
-          "activity": "${SendActivity_nBxuTg()}"
+          "activity": "${SendActivity_z9FZNM()}"
         }
       ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "emptybot-3.lg",
-  "recognizer": "emptybot-3.lu.qna",
+  "recognizer": "emptybot-3.lu",
   "id": "emptybot-3"
 }
